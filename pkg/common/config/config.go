@@ -45,7 +45,7 @@ func MustGetConfigPathFromFlags(configKey string) string {
 	var configPath *string
 	configPath = flag.String(configKey, "", "Config Path")
 	flag.Parse()
-	log.Debug().Msgf("Using config path %s", &configPath)
+	log.Debug().Msgf("Using config path %s", *configPath)
 	if configPath == nil || lo.IsEmpty(*configPath) {
 		log.Fatal().Msgf("Unable to load config path. Empty Path specified. ")
 	}
