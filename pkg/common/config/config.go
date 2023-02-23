@@ -34,6 +34,7 @@ func LoadConfig(path string) (err error) {
 	viper.SetConfigFile(path)
 	viper.SetConfigType("yaml")
 	viper.AutomaticEnv()
+	viper.SetEnvPrefix("APP")
 	err = viper.ReadInConfig()
 	if err != nil {
 		return err

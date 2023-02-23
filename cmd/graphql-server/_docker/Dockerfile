@@ -3,9 +3,12 @@
 ############################
 ARG ENV
 FROM golang:alpine AS builder
+
 # Install git.
 # Git is required for fetching the dependencies.
-RUN apk update && apk add  git && apk add  build-base upx
+RUN apk update && \
+    apk add git && \
+    apk add build-base upx
 
 WORKDIR /src/go-graphql-starter/graphql-server/
 COPY . .

@@ -12,14 +12,14 @@ tasks:
       - docker build -t dockerhub.com/go-graphql-starter/graphql-server:latest --build-arg ENV=stage -f cmd/graphql-server/_docker/Dockerfile .      
   d.up:
     cmds:
-      - docker-compose up -d
+      - docker-compose up -d --build
   d.down:
     cmds:
       - docker-compose down
   db.migrate:
     cmds:
       - atlas schema apply --auto-approve --url "$DATABASE_URL" --to "file://database/schema.hcl" --dev-url "docker://postgres/15"      
-  gqlgen:
+  gql.gen:
     dir: cmd/graphql-server
     cmds:
       - echo 'Generating GraphQL Schema'

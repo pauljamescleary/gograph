@@ -2,6 +2,7 @@ version: "3.9"
 services:
   db:
     image: postgres:15.2-alpine
+    container_name: gograph_db
     restart: always
     environment:
       - POSTGRES_USER=test
@@ -11,6 +12,23 @@ services:
       - '5435:5432'
     volumes:
       - .localdb:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: cmd/graphql-server/_docker/Dockerfile
+      network: host
+      args:
+        - ENV=dev      
+    container_name: gograph_api
+    depends_on:
+      - db
+    ports:
+      - '8080:8080'
+    restart: always
+    environment:
+      - APP_DB.POSTGRES.URL=postgres://test:test@gograph_db:5432/notesdb
+
 volumes:
   .localdb:
     driver: local
