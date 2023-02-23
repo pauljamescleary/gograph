@@ -9,10 +9,11 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/pauljamescleary/gograph/cmd/graphql-server/dependencies"
 	"github.com/pauljamescleary/gograph/cmd/graphql-server/graph"
 	"github.com/pauljamescleary/gograph/cmd/graphql-server/graph/generated"
 	"github.com/pauljamescleary/gograph/pkg/common/config"
+	"github.com/pauljamescleary/gograph/pkg/common/db"
+	"github.com/pauljamescleary/gograph/pkg/services/notes"
 	"github.com/rs/zerolog/log"
 	"github.com/samber/lo"
 )
@@ -84,6 +85,28 @@ func setCORSMiddleware(r *echo.Echo) {
 
 }
 
+func NewAppResolverService() (*graph.Resolver, error) {
+	pool, err := db.ProvidePgConnectionPool()
+	if err != nil {
+		return nil, err
+	}
+	database := db.ProvideNewDatabaseConnection(pool)
+	repository, err := notes.ProvideNewNotesRepository(database)
+	if err != nil {
+		return nil, err
+	}
+	transactionManager, err := db.ProvideNewPostgresTransactor(database)
+	if err != nil {
+		return nil, err
+	}
+	service, err := notes.ProvideNewNotesService(repository, transactionManager)
+	if err != nil {
+		return nil, err
+	}
+	resolver := graph.ProvideNewServerResolver(service)
+	return resolver, nil
+}
+
 func SetupServer(configPath string) (*echo.Echo, error) {
 	err := config.MustLoadConfigAtPath(configPath)
 	r := echo.New()
@@ -91,7 +114,7 @@ func SetupServer(configPath string) (*echo.Echo, error) {
 	if err != nil {
 		return nil, err
 	}
-	resolver, err := dependencies.NewAppResolverService()
+	resolver, err := NewAppResolverService()
 	if err != nil {
 		return nil, err
 	}

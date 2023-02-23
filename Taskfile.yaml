@@ -3,38 +3,42 @@ env:
   APP_ENV: dev
   DATABASE_URL: '{{.DATABASE_URL | default "postgres://test:test@localhost:5435/notesdb?sslmode=disable"}}'
 tasks:
-  deps.gen:
-    dir: cmd/graphql-server/dependencies
-    cmds:
-      - wire
   d.build:
     cmds:
-      - docker build -t dockerhub.com/go-graphql-starter/graphql-server:latest --build-arg ENV=stage -f cmd/graphql-server/_docker/Dockerfile .      
-  d.up:
-    cmds:
-      - docker-compose up -d --build
+      - docker build -t dockerhub.com/go-graphql-starter/graphql-server:latest --build-arg ENV=stage -f cmd/graphql-server/_docker/Dockerfile .
+      
   d.down:
     cmds:
       - docker-compose down
-  db.migrate:
+
+  d.up:
     cmds:
-      - atlas schema apply --auto-approve --url "$DATABASE_URL" --to "file://database/schema.hcl" --dev-url "docker://postgres/15"      
+      - docker-compose up -d --build
+
+  db.migrate:
+    deps: [db.up]
+    cmds:
+      - atlas schema apply --auto-approve --url "$DATABASE_URL" --to "file://database/schema.hcl" --dev-url "docker://postgres/15"
+
+  db.up:  
+    cmds:
+      - docker-compose up -d db
+
   gql.gen:
     dir: cmd/graphql-server
     cmds:
       - echo 'Generating GraphQL Schema'
       - go run github.com/99designs/gqlgen generate
       - echo 'Generated Schema. Please check ./cmd/go-graphql-starter/graph folder for any errors.'
+
   server.run:
+    deps: [db.migrate]
     dir: cmd/graphql-server
     cmds:
       - go build -o graphql-server
       - PORT=7777 ./graphql-server -configpath ./config/dev/config.yaml
+
   test:
     cmds:
       - (rm /tmp/unit_coverage.out || echo "Deleted Old files")
       - go test -mod=mod -v  -coverprofile  /tmp/unit_coverage.out ./...
-  dev.init:
-    cmds:
-      - echo "Installing Wire for Compile Time Dependency Injection."
-      - go install github.com/google/wire/cmd/wire@latest
