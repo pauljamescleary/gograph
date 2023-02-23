@@ -4,10 +4,10 @@ import (
 	"context"
 
 	"github.com/lithammer/shortuuid/v4"
+	"github.com/pauljamescleary/gograph/pkg/common/db"
+	"github.com/pauljamescleary/gograph/pkg/common/lib/apperrors"
+	"github.com/pauljamescleary/gograph/pkg/model"
 	"github.com/rs/zerolog/log"
-	"github.com/shanmukhsista/go-graphql-starter/pkg/common/db"
-	"github.com/shanmukhsista/go-graphql-starter/pkg/common/lib/apperrors"
-	"github.com/shanmukhsista/go-graphql-starter/pkg/model"
 )
 
 const (

@@ -1,6 +1,6 @@
-module github.com/shanmukhsista/go-graphql-starter
+module github.com/pauljamescleary/gograph
 
-replace github.com/shanmukhsista/go-graphql-starter => ./
+replace github.com/pauljamescleary/gograph => ./
 
 go 1.19
 

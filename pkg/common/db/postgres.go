@@ -7,8 +7,8 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/pauljamescleary/gograph/pkg/common/config"
 	"github.com/rs/zerolog/log"
-	"github.com/shanmukhsista/go-graphql-starter/pkg/common/config"
 )
 
 const (

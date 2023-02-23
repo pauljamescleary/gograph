@@ -7,8 +7,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/shanmukhsista/go-graphql-starter/cmd/graphql-server/graph/generated"
-	"github.com/shanmukhsista/go-graphql-starter/pkg/model"
+	"github.com/pauljamescleary/gograph/cmd/graphql-server/graph/generated"
+	"github.com/pauljamescleary/gograph/pkg/model"
 )
 
 // CreateNewNote is the resolver for the createNewNote field.

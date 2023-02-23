@@ -5,9 +5,9 @@ package dependencies
 
 import (
 	"github.com/google/wire"
-	"github.com/shanmukhsista/go-graphql-starter/cmd/graphql-server/graph"
-	"github.com/shanmukhsista/go-graphql-starter/pkg/common/db"
-	"github.com/shanmukhsista/go-graphql-starter/pkg/services/notes"
+	"github.com/pauljamescleary/gograph/cmd/graphql-server/graph"
+	"github.com/pauljamescleary/gograph/pkg/common/db"
+	"github.com/pauljamescleary/gograph/pkg/services/notes"
 )
 
 var postgresDbConnectionSet = wire.NewSet(db.ProvidePgConnectionPool,

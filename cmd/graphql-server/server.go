@@ -9,12 +9,12 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/pauljamescleary/gograph/cmd/graphql-server/dependencies"
+	"github.com/pauljamescleary/gograph/cmd/graphql-server/graph"
+	"github.com/pauljamescleary/gograph/cmd/graphql-server/graph/generated"
+	"github.com/pauljamescleary/gograph/pkg/common/config"
 	"github.com/rs/zerolog/log"
 	"github.com/samber/lo"
-	"github.com/shanmukhsista/go-graphql-starter/cmd/graphql-server/dependencies"
-	"github.com/shanmukhsista/go-graphql-starter/cmd/graphql-server/graph"
-	"github.com/shanmukhsista/go-graphql-starter/cmd/graphql-server/graph/generated"
-	"github.com/shanmukhsista/go-graphql-starter/pkg/common/config"
 )
 
 const defaultPort = "8080"

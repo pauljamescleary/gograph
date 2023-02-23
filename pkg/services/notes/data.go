@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/pauljamescleary/gograph/pkg/common/db"
+	"github.com/pauljamescleary/gograph/pkg/model"
 	"github.com/rs/zerolog/log"
-	"github.com/shanmukhsista/go-graphql-starter/pkg/common/db"
-	"github.com/shanmukhsista/go-graphql-starter/pkg/model"
 )
 
 type Repository interface {

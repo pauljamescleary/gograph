@@ -1,6 +1,6 @@
 package graph
 
-import "github.com/shanmukhsista/go-graphql-starter/pkg/services/notes"
+import "github.com/pauljamescleary/gograph/pkg/services/notes"
 
 // This file will not be regenerated automatically.
 //
